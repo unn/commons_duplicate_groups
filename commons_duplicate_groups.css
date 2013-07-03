@@ -1,0 +1,25 @@
+
+#cdg-informer {
+  background: url(images/throbber.gif) center top no-repeat;
+  padding-left: 16px;
+}
+.cdg-informer-progress { 
+  background: url(images/throbber.gif) no-repeat center -20px !important;  
+}
+.cdg-informer-accepted {
+  background: url(images/accepted.png) no-repeat center center !important; 
+}
+.cdg-informer-rejected {
+  background: url(images/rejected.png) no-repeat center center !important; 
+}
+
+#cdg-message {
+  color: #FF0000;
+  font-weight: normal;
+  display: none;
+  margin: 15px 0;
+}
+
+.cdg-message-rejected {
+  color: #FF0000;
+} 
