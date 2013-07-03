@@ -1,14 +1,24 @@
 <?php
-function commons_duplicate_groups_unique() {
+/**
+ * @file
+ * File handles the ajax callback for duplicate checking.
+ */
+
+/**
+ * Checks the submitted group for groups that are similar.
+ */
+function commons_duplicate_groups_duplicate() {
   $output = array();
   $group = check_plain($_GET['group']);
   // @todo solr search this
   $query = db_select('node', 'n');
-  $query->join('field_data_group_group', 'fg', 'n.nid = fg.entity_id AND (fg.entity_type = :str AND fg.deleted=:int)', array(':str'=>'node', ':int'=> 0));
-  $query->fields('n', array('nid', 'title'))
+  $query->join('field_data_group_group', 'fg', 'n.nid = fg.entity_id AND (fg.entity_type = :str AND fg.deleted=:int)', array(':str' => 'node', ':int' => 0));
+  $query->fields('n', array('nid', 'title', 'created'))
     ->condition('status', 1, '=')
     ->condition('fg.group_group_value', 1, '=')
-    ->condition('n.title', '%' . db_like($group) . '%', 'LIKE');
+    ->condition('n.title', '%' . db_like($group) . '%', 'LIKE')
+    ->orderBy('created', 'DESC')
+    ->range(0, 5);
 
   $results = $query->execute()->fetchAll();
   if ($results) {
